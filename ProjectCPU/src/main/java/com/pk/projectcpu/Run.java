@@ -23,7 +23,7 @@ public class Run {
     int r = 0;
     ArrayList<Instruction> instructionSet;
     Loader ld;
-    int[] memory = {2,3,0,0,0,0,0,0,90,100,110,120,130,150};
+    int[] memory = {2,3,1,2,0,0,0,0,90,100,110,120,130,150};
     public static void main(String args[]){
        String filePath ="src/contents.txt";
        
@@ -60,6 +60,13 @@ public class Run {
         }
         
     }
+    public void performIndirectCycle(){
+        mar = mbr.getAddress();
+        mbr.setAddress(memory[mar]);
+        f = 1;
+        r = 0;
+        performNextCycle();
+    }
     public void performExecuteCycle(){
         switch(opr){
             case 0:
@@ -68,34 +75,29 @@ public class Run {
             case 1:
                 performADD();
                 break;
-            case 2:
+            case 10:
                 performLDA();
                 break;
-            case 3:
+            case 11:
                 performSTA();
                 break;
-            case 4:
+            case 100:
                 performBUN();
                 break;
-            case 5:
+            case 101:
                 performBSA();
                 break;
-            case 6:
+            case 110:
                 performISZ();
                 break;
-            case 7:
+            case 111:
                 performRef();
                 break;
             default:
                 System.out.println("LOL");
         }
     }
-    public void performIndirectCycle(){
-        mar = mbr.getAddress();
-        mbr.setAddress(memory[mar]);
-        f = 1;
-        r = 0;
-    }
+    
     public void performAND(){
         mar = mbr.getAddress();
         mbr.setAddress(memory[mar]);
@@ -125,6 +127,7 @@ public class Run {
         performNextCycle();
     }
     public void performBUN(){
+        // TODO:
         
     }
     public void performBSA(){
